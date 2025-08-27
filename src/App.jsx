@@ -1,0 +1,17 @@
+import { useState, useEffect, React } from 'react'
+import './css/App.css'
+import {Header} from "./components/header.jsx"
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <div className="app">
+        <Header />
+      </div>
+    </>
+  )
+}
+
+export default App
