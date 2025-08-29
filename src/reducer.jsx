@@ -22,7 +22,7 @@ const reducer = ( state, action ) => {
             if(index >= 0){
                 newBasket.splice(index, 1)
             }else{
-                console.warn(`Can't remove prodict (id: ${action.id}) as its not in the basket!`)
+                console.warn(`Can't remove predict (id: ${action.id}) as its not in the basket!`)
             }
 
             return {
