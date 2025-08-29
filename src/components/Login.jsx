@@ -4,7 +4,7 @@ import Amazon from "../assets/login-amazon.png"
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { db, auth } from "../firebase.jsx"
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
 function Login() {
     const navigate = useNavigate()
@@ -13,6 +13,15 @@ function Login() {
 
     const signIn = (e) => {
         e.preventDefault()
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then((auth) => {
+            console.log(auth)
+            navigate("/")
+        })
+        .catch((err) => {
+            alert(err.message)
+        })
     }
 
 
