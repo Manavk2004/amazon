@@ -3,19 +3,30 @@ import "../css/Login.css"
 import Amazon from "../assets/login-amazon.png"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
+import { db, auth } from "../firebase.jsx"
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 function Login() {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
-    const signIn = e => {
+    const signIn = (e) => {
         e.preventDefault()
     }
-    
 
-    const register = e => [
+
+    const register = (e) => {
         e.preventDefault()
-    ]
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((auth) => {
+            console.log(auth)
+        })
+        .catch((err) => {
+            alert(err.message)
+        })
+        
+    }
 
 
 
