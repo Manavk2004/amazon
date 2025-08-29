@@ -1,12 +1,13 @@
 import React from 'react'
 import "../css/Login.css"
 import Amazon from "../assets/login-amazon.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { db, auth } from "../firebase.jsx"
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 function Login() {
+    const navigate = useNavigate()
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
@@ -21,6 +22,9 @@ function Login() {
         createUserWithEmailAndPassword(auth, email, password)
         .then((auth) => {
             console.log(auth)
+            if (auth){
+                navigate("/")
+            }
         })
         .catch((err) => {
             alert(err.message)
