@@ -7,6 +7,7 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import Card from '@mui/material/Card'
 import { getBasketTotal } from '../reducer'
 import { NumericFormat } from "react-number-format"
+import axios from 'axios'
 
 function Payment() {
 
@@ -25,15 +26,19 @@ function Payment() {
 
     useEffect(() => {
         const getClientSecret = async () => {
+            console.log("Inside client secret")
             const response = await axios({
                 method: "post",
                 url: `/payments/create?total=${getBasketTotal(basket) * 100}`
             })
+            console.log("Here is the axios response", response)
             setClientSecret(response.data.clientSecret)
         }
 
         getClientSecret()
     }, [basket])
+
+    console.log("THE SECRET IS >>>", clientSecret)
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -48,7 +53,7 @@ function Payment() {
             setError(null)
             setProcessing(false)
 
-            navigate('/orders')
+            navigate('/orders', { replace: true})
         })
         // const payload = await stripe
     }
@@ -80,8 +85,9 @@ function Payment() {
                 <h3>Review items and delivery</h3>
             </div>
             <div className="payment__items">
-                {basket.map((item) => (
+                {basket.map((item, key) => (
                     <CheckoutProduct
+                        key={key}
                         id={item.id}
                         title={item.title}
                         image={item.image}
