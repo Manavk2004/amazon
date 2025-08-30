@@ -76,7 +76,10 @@ function App() {
                 </>
               } />
               <Route path="/orders"element={
-                <Orders />
+                <>
+                  <Header />
+                  <Orders />
+                </>
               }
               />
 

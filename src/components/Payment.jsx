@@ -119,7 +119,7 @@ function Payment() {
                 <div className="payment__details">
 
                     <form onSubmit={handleSubmit}>
-                        <CardElement onChange={handleChange} />
+                        <CardElement className="payment__card" onChange={handleChange} />
 
                         <div className="payment__priceContainer">
                             <NumericFormat
