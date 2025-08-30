@@ -9,6 +9,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./firebase.jsx"
 import { useStateValue } from './StateProvider.jsx'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+
+
+const promise = loadStripe("pk_live_51NXQYICvPvB2ndI1gcZ3H7GLdVcWqan2epjtVkCNdC0dvzWO1BKPwEoTNpcYCLsbp1LbXjpSSOxlCi8rHcOMvfaY00bZUIEVyQ")
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,6 +36,8 @@ function App() {
       }
     }))
   }, [])
+
+
 
   return (
     <>
@@ -60,7 +68,9 @@ function App() {
               <Route path="/payment" element={
                 <>
                   <Header/>
-                  <Payment />
+                  <Elements stripe={promise}>
+                    <Payment />
+                  </Elements>
                 </>
               } />
 
