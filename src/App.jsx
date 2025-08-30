@@ -5,12 +5,14 @@ import Checkout from "./components/Checkout.jsx"
 import Home from "./components/Home.jsx"
 import Login from "./components/Login.jsx"
 import Payment from './components/Payment.jsx'
+import Order from './components/Orders.jsx'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./firebase.jsx"
 import { useStateValue } from './StateProvider.jsx'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
+import Orders from './components/Orders.jsx'
 
 
 const promise = loadStripe("pk_live_51NXQYICvPvB2ndI1gcZ3H7GLdVcWqan2epjtVkCNdC0dvzWO1BKPwEoTNpcYCLsbp1LbXjpSSOxlCi8rHcOMvfaY00bZUIEVyQ")
@@ -73,6 +75,10 @@ function App() {
                   </Elements>
                 </>
               } />
+              <Route path="/orders"element={
+                <Orders />
+              }
+              />
 
 
 

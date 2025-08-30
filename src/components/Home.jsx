@@ -20,7 +20,7 @@ function Home() {
             <Product
                 id={Math.floor(Math.random() * 100) + 1} 
                 title="Gold Bracelet for Women | 18K Gold Plated Stainless Steel Gold Bracelet | Lovely Gift for Women" 
-                price={17.99} 
+                price={1} 
                 image={Bracelet} 
                 rating={4}
             />

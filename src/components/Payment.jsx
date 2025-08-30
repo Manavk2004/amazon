@@ -8,6 +8,8 @@ import Card from '@mui/material/Card'
 import { getBasketTotal } from '../reducer'
 import { NumericFormat } from "react-number-format"
 import axios from 'axios'
+import { db } from '../firebase'
+import { collection, doc, setDoc } from 'firebase/firestore'
 
 function Payment() {
 
@@ -22,7 +24,7 @@ function Payment() {
     const [ processing, setProcessing ] = useState("")
     const [ error, setError ] = useState(null)
     const [ disabled, setDisabled ] = useState(true)
-    const [ clientSecret, setClientSecret ] = useState(true)
+    const [ clientSecret, setClientSecret ] = useState("")
 
     useEffect(() => {
         const getClientSecret = async () => {
@@ -48,13 +50,25 @@ function Payment() {
             payment_method: {
                 card: elements.getElement(CardElement)
             }
-        }).then(({ paymentIntent }) => {
-            setSucceeded(true)
-            setError(null)
-            setProcessing(false)
-
-            navigate('/orders', { replace: true})
-        })
+        }).then(async ({ paymentIntent }) => {
+            try {
+                await setDoc(
+                    doc(collection(db, 'users'), user?.uid, 'orders', paymentIntent.id),
+                    {
+                        basket: basket,
+                        amount: paymentIntent.amount,
+                        created: paymentIntent.created
+                    }
+                );
+            } catch (err) {
+                setError("Failed to save order: " + err.message);
+            }
+            setSucceeded(true);
+            setError(null);
+            setProcessing(false);
+            dispatch({ type: 'EMPTY_BASKET' });
+            navigate('/orders', { replace: true });
+        });
         // const payload = await stripe
     }
 
